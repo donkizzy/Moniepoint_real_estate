@@ -1,5 +1,5 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:moniepoint_real_estate/custom_bottom_nav.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -9,44 +9,42 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
-  ValueNotifier<int> selectedIndex = ValueNotifier(0) ;
-  List<Widget> screens=  [const Placeholder(),const Placeholder(),const Placeholder(),const Placeholder(),const Placeholder(),] ;
+  ValueNotifier<int> selectedIndex = ValueNotifier(0);
+
+//["assets/search.svg","assets/message.svg","assets/home.svg","assets/heart.svg","assets/user.svg"]
+  List<Widget> screens = [
+    const Placeholder(),
+    const Placeholder(),
+    const Placeholder(),
+    const Placeholder(),
+    const Placeholder(),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: ValueListenableBuilder(
-        valueListenable: selectedIndex,
-        builder: (BuildContext context, int value, Widget? child) {
-          return Container(
-            height: 80,
-            padding: const EdgeInsets.all(8),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: CurvedNavigationBar(
-                  height: 50,
-                  backgroundColor: Colors.white,
-                  color: Colors.white,
-                  buttonBackgroundColor: Colors.grey.shade300,
-                  onTap: (index){
-                    selectedIndex.value = index ;
-                  },
-                  index: value,
-                  items: const <Widget>[
-                    Icon(Icons.home),
-                    Icon(Icons.search),
-                    Icon(Icons.settings),
-                    Icon(Icons.person),
-                    Icon(Icons.person),
-                  ]),
-
-            ),
-
-          ) ;
-        },
-      ),
-      body:  const IndexedStack(
-        children: [],
-      ),
+    return ValueListenableBuilder(
+      valueListenable: selectedIndex,
+      builder: (BuildContext context, int value, Widget? child) {
+        return Scaffold(
+          bottomNavigationBar: FloatingNavbar(
+            onTap: (int val) {
+              selectedIndex.value = val;
+            },
+            currentIndex: value,
+            items: [
+              "assets/search.svg",
+              "assets/message.svg",
+              "assets/home.svg",
+              "assets/heart.svg",
+              "assets/user.svg"
+            ],
+          ),
+          body: IndexedStack(
+            index: value,
+            children: screens,
+          ),
+        );
+      },
     );
   }
 }
