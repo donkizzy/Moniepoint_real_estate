@@ -28,10 +28,10 @@ class FloatingNavbar extends StatefulWidget {
             );
 
   @override
-  _FloatingNavbarState createState() => _FloatingNavbarState();
+  FloatingNavbarState createState() => FloatingNavbarState();
 }
 
-class _FloatingNavbarState extends State<FloatingNavbar> {
+class FloatingNavbarState extends State<FloatingNavbar> {
   List<String> get items => widget.items;
 
   @override
@@ -43,7 +43,7 @@ class _FloatingNavbarState extends State<FloatingNavbar> {
           padding: const EdgeInsets.symmetric(vertical: 3,),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
-            color: tuataraBlack,
+            color: mineShaftGrey,
           ),
           child: Row(
             children: items
@@ -72,7 +72,7 @@ ItemBuilder _defaultItemBuilder({
         shape: BoxShape.circle,
           color: isSelected
               ? sunOrange
-              : mineShaftGrey,
+              : tuataraBlack,
           ),
       child: InkWell(
         onTap: () {
@@ -83,7 +83,7 @@ ItemBuilder _defaultItemBuilder({
           child: Center(
             child: SvgPicture.asset(
               items[index],
-              height: 18,
+              height: 25,
               colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
             ),
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:moniepoint_real_estate/custom_bottom_nav.dart';
+import 'package:moniepoint_real_estate/features/bottom_nav/custom_bottom_nav.dart';
+import 'package:moniepoint_real_estate/features/home/home.dart';
+import 'package:moniepoint_real_estate/features/search/search.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -9,13 +11,12 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
-  ValueNotifier<int> selectedIndex = ValueNotifier(0);
+  ValueNotifier<int> selectedIndex = ValueNotifier(2);
 
-//["assets/search.svg","assets/message.svg","assets/home.svg","assets/heart.svg","assets/user.svg"]
   List<Widget> screens = [
+    const SearchPage(),
     const Placeholder(),
-    const Placeholder(),
-    const Placeholder(),
+    const HomePage(),
     const Placeholder(),
     const Placeholder(),
   ];
@@ -26,12 +27,13 @@ class _BottomNavState extends State<BottomNav> {
       valueListenable: selectedIndex,
       builder: (BuildContext context, int value, Widget? child) {
         return Scaffold(
+          extendBody: true,
           bottomNavigationBar: FloatingNavbar(
             onTap: (int val) {
               selectedIndex.value = val;
             },
             currentIndex: value,
-            items: [
+            items: const [
               "assets/search.svg",
               "assets/message.svg",
               "assets/home.svg",
