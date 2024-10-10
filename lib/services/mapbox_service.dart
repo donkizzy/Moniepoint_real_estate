@@ -1,8 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:moniepoint_real_estate/features/search/custom_marker.dart';
 import 'package:moniepoint_real_estate/location.dart';
 
 class MapBoxService {
@@ -64,7 +62,7 @@ class MapBoxService {
     final randomDist = sqrt(rnd) * distance;
     return _pointAtDistance(coord, randomDist);
   }
-  List<Location> get _getRandomLocations {
+  List<Location>  getRandomLocations() {
     List<Location> locations = [];
     for (int i = 0; i < 6; i++) {
       final result = pointInCircle(current, 25);
@@ -73,17 +71,5 @@ class MapBoxService {
     return locations;
   }
 
-  List<Marker> get getRandomMarkers {
-    return List<Marker>.from(
-      _getRandomLocations.map(
-            (e) => Marker(
-          height: 35,
-          width: 35,
-          point: LatLng(e.lat, e.long),
-          child: const CustomMarker(),
-        ),
-      ),
-    );
-  }
 
 }

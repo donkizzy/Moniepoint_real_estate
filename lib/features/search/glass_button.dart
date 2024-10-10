@@ -6,16 +6,12 @@ import 'package:moniepoint_real_estate/app_colors.dart';
 class GlassButton extends StatelessWidget {
   final double? height;
   final double? width;
-  final String? tooltip;
   final Widget? child;
-  final VoidCallback? onTap;
   const GlassButton({
     super.key,
     this.height,
     this.width,
-    this.tooltip,
     this.child,
-    this.onTap,
   });
 
   @override
@@ -38,18 +34,11 @@ class GlassButton extends StatelessWidget {
           child: Material(
             borderRadius: BorderRadius.circular(30),
             color: Colors.transparent,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(30),
-              onTap: onTap,
-              child: Tooltip(
-                message: tooltip,
-                child: Ink(
-                  height: height,
-                  width: width,
-                  padding: const EdgeInsets.all(10),
-                  child: child,
-                ),
-              ),
+            child: Ink(
+              height: height,
+              width: width,
+              padding: const EdgeInsets.all(10),
+              child: child,
             ),
           ),
         ),
