@@ -12,3 +12,4 @@ const cloudyBrown = Color(0XFFb1aaa2);
 const doveGrey = Color(0XFF6f6f6f);
 const coralReefGrey = Color(0XFFcbb9a4);
 const kabulBrown = Color(0XFF53473b);
+const tapaGrey = Color(0XFF7f7b72);

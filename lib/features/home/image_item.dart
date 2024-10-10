@@ -53,8 +53,8 @@ class RealEstateItem extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                               ),
                               overflow: TextOverflow.ellipsis,
-                            ).animate(delay: 1.2.seconds).fadeIn(
-                                  duration: 1.2.seconds,
+                            ).animate(delay: 0.5.seconds).fadeIn(
+                                  duration: 1.seconds,
                                 ),
                             const Spacer()
                           ] else ...[
@@ -69,8 +69,8 @@ class RealEstateItem extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                               ),
                               overflow: TextOverflow.ellipsis,
-                            ).animate(delay: 1.2.seconds).fadeIn(
-                                  duration: 1.2.seconds,
+                            ).animate(delay: 0.5.seconds).fadeIn(
+                                  duration: 1.seconds,
                                 ),),
                             const SizedBox(
                               width: 10,

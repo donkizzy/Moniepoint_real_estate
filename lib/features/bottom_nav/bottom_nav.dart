@@ -41,10 +41,7 @@ class _BottomNavState extends State<BottomNav> {
               "assets/user.svg"
             ],
           ),
-          body: IndexedStack(
-            index: value,
-            children: screens,
-          ),
+          body: screens[value],
         );
       },
     );
