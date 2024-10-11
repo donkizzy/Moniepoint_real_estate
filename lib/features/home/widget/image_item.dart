@@ -31,7 +31,7 @@ class RealEstateItem extends StatelessWidget {
           child: TweenAnimationBuilder<double>(
             tween: Tween<double>(begin: 50, end: width(context)),
             curve: Curves.easeInToLinear,
-            duration: 1.seconds,
+            duration: 2.8.seconds,
             builder: (BuildContext context, double value, Widget? child) {
               return Container(
                 width: value,
@@ -77,7 +77,7 @@ class RealEstateItem extends StatelessWidget {
                             ),
                           ],
                         ],
-                      ).animate(delay: 1.2.seconds).fadeIn(
+                      ).animate(delay: 2.8.seconds).fadeIn(
                             duration: 1.seconds,
                           ),
                     ),

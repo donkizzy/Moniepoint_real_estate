@@ -41,7 +41,7 @@ class _BottomNavState extends State<BottomNav> {
               "assets/heart.svg",
               "assets/user.svg"
             ],
-          ).animate(delay: 2.seconds).slideY(
+          ).animate(delay: 2.5.seconds).slideY(
             duration: 1000.milliseconds,
             begin: 1.5,
             end: 0,
