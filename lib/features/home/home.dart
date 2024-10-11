@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moniepoint_real_estate/animated_count_up.dart';
@@ -13,25 +14,41 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  final ScrollController scrollController = ScrollController();
-  bool _isVisible = false;
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
+  final ScrollController _scrollController = ScrollController();
+ late  AnimationController _animationController;
+  late Animation<Offset> _offsetAnimation;
+  ValueNotifier<double> opacity = ValueNotifier(0);
+
 
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      if (scrollController.position.pixels > 30) {
-        setState(() {
-          _isVisible = false;
-        });
-      } else {
-        setState(() {
-          _isVisible = true;
-        });
-      }
-    });
+    _animationController = AnimationController(
+      vsync: this,
+      duration: 1.seconds,
+    );
+    _offsetAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(1, 0), // Adjust the end offset for desired slide distance
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOutQuad,
+    ));
+    _scrollController.addListener(_scrollListener);
   }
+
+  _scrollListener() {
+      if (_scrollController.position.userScrollDirection == ScrollDirection.reverse) {
+        opacity.value = 1 ;
+        _animationController.forward(); // Slide in the bottom widget
+      } else {
+        opacity.value = 0 ;
+        _animationController.reverse(); // Slide out the bottom widget
+      }
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +65,7 @@ class _HomePageState extends State<HomePage> {
           ],
         )),
         child: CustomScrollView(
+          controller: _scrollController,
           physics: const ClampingScrollPhysics(),
           slivers: [
             SliverAppBar(
@@ -76,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(fontSize: 14, color: donkeyBrown, fontWeight: FontWeight.w500),
                         )
                       ],
-                    ).animate(delay: 1.seconds).fadeIn(
+                    ).animate(delay: 0.8.seconds).fadeIn(
                           duration: 500.milliseconds,
                         ),
                   );
@@ -108,150 +126,254 @@ class _HomePageState extends State<HomePage> {
                     child: const Text(
                       'Hi, Marina',
                       style: TextStyle(color: donkeyBrown, fontSize: 24, fontWeight: FontWeight.w500),
-                    ).animate(delay: 0.8.seconds).move(duration: 450.ms,begin: const Offset(0, 10)).fade(duration: 450.ms),
+                    )
+                        .animate(delay: 0.8.seconds)
+                        .move(duration: 450.ms, begin: const Offset(0, 10))
+                        .fade(duration: 450.ms),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: const Text(
                       'let\'s select your perfect place',
                       style: TextStyle(color: mineShaftGrey, fontSize: 35, fontWeight: FontWeight.w500),
-                    ).animate(delay: 1.1.seconds).move(duration: 500.ms,begin: const Offset(0, 10)).fade(duration: 500.ms),
+                    )
+                        .animate(delay: 1.1.seconds)
+                        .move(duration: 500.ms, begin: const Offset(0, 10))
+                        .fade(duration: 500.ms),
                   ),
                   const SizedBox(
                     height: 30,
                   ),
-                  if (!_isVisible)
-                    SizedBox(
-                      height: height(context) > 760 ? 200 : 150,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Row(
-                          children: [
-                            Flexible(
-                                fit: FlexFit.tight,
-                                child: Container(
-                                  padding: const EdgeInsets.only(top: 30, bottom: 10, right: 10, left: 10),
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: sunOrange,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      const Text(
-                                        "BUY",
-                                        style:
-                                            TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
-                                      ),
-                                      const Spacer(),
-                                      Column(
-                                        children: [
-                                          AnimatedCountUp(
-                                            duration: 1.5.seconds,
-                                            end: 1024,
-                                            style: GoogleFonts.manrope(
-                                                color: Colors.white, fontWeight: FontWeight.w800, fontSize: 40),
-                                          ),
-                                          const Text(
-                                            "offers",
-                                            style: TextStyle(color: Colors.white),
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                    ],
-                                  ),
-                                )),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Flexible(
-                                fit: FlexFit.tight,
-                                child: Container(
-                                  padding: const EdgeInsets.only(top: 30, bottom: 10, right: 10, left: 10),
-                                  decoration:
-                                      BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(25)),
-                                  child: Column(
-                                    children: [
-                                      const Text(
-                                        "RENT",
-                                        style: TextStyle(color: donkeyBrown, fontSize: 16, fontWeight: FontWeight.w500),
-                                      ),
-                                      const Spacer(),
-                                      Column(
-                                        children: [
-                                          AnimatedCountUp(
-                                            duration: 1.5.seconds,
-                                            end: 2212,
-                                            style: GoogleFonts.manrope(
-                                                color: donkeyBrown, fontWeight: FontWeight.w800, fontSize: 40),
-                                          ),
-                                          const Text(
-                                            "offers",
-                                            style: TextStyle(color: donkeyBrown),
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                    ],
-                                  ),
-                                )),
-                          ],
-                        ).animate().scale(
-                              duration: 1.seconds,
-                            ),
+                  SizedBox(
+                    height: height(context) > 760 ? 200 : 150,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Row(
+                        children: [
+                          Flexible(
+                              fit: FlexFit.tight,
+                              child: Container(
+                                padding: const EdgeInsets.only(top: 30, bottom: 10, right: 10, left: 10),
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: sunOrange,
+                                ),
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      "BUY",
+                                      style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
+                                    ),
+                                    const Spacer(),
+                                    Column(
+                                      children: [
+                                        AnimatedCountUp(
+                                          duration: 1.5.seconds,
+                                          end: 1024,
+                                          style: GoogleFonts.manrope(
+                                              color: Colors.white, fontWeight: FontWeight.w800, fontSize: 40),
+                                        ),
+                                        const Text(
+                                          "offers",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                  ],
+                                ),
+                              )),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Flexible(
+                              fit: FlexFit.tight,
+                              child: Container(
+                                padding: const EdgeInsets.only(top: 30, bottom: 10, right: 10, left: 10),
+                                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(25)),
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      "RENT",
+                                      style: TextStyle(color: donkeyBrown, fontSize: 16, fontWeight: FontWeight.w500),
+                                    ),
+                                    const Spacer(),
+                                    Column(
+                                      children: [
+                                        AnimatedCountUp(
+                                          duration: 1.5.seconds,
+                                          end: 2212,
+                                          style: GoogleFonts.manrope(
+                                              color: donkeyBrown, fontWeight: FontWeight.w800, fontSize: 40),
+                                        ),
+                                        const Text(
+                                          "offers",
+                                          style: TextStyle(color: donkeyBrown),
+                                        ),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                  ],
+                                ),
+                              )),
+                        ],
+                      ).animate().scale(
+                        duration: 1.seconds,
                       ),
                     ),
-                  const SizedBox(
+                  ),
+                  SizedBox(
                     height: 30,
                   ),
+                  // ValueListenableBuilder(
+                  //   valueListenable: opacity,
+                  //   builder: (BuildContext context, double value, Widget? child) {
+                  //     return AnimatedSwitcher(
+                  //       duration: const Duration(milliseconds: 1),
+                  //     //  opacity: 1 - value,
+                  //       child: value == 0 ? SizedBox(
+                  //         height: height(context) > 760 ? 200 : 150,
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  //           child: Row(
+                  //             children: [
+                  //               Flexible(
+                  //                   fit: FlexFit.tight,
+                  //                   child: Container(
+                  //                     padding: const EdgeInsets.only(top: 30, bottom: 10, right: 10, left: 10),
+                  //                     decoration: const BoxDecoration(
+                  //                       shape: BoxShape.circle,
+                  //                       color: sunOrange,
+                  //                     ),
+                  //                     child: Column(
+                  //                       children: [
+                  //                         const Text(
+                  //                           "BUY",
+                  //                           style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
+                  //                         ),
+                  //                         const Spacer(),
+                  //                         Column(
+                  //                           children: [
+                  //                             AnimatedCountUp(
+                  //                               duration: 1.5.seconds,
+                  //                               end: 1024,
+                  //                               style: GoogleFonts.manrope(
+                  //                                   color: Colors.white, fontWeight: FontWeight.w800, fontSize: 40),
+                  //                             ),
+                  //                             const Text(
+                  //                               "offers",
+                  //                               style: TextStyle(color: Colors.white),
+                  //                             ),
+                  //                           ],
+                  //                         ),
+                  //                         const Spacer(),
+                  //                       ],
+                  //                     ),
+                  //                   )),
+                  //               const SizedBox(
+                  //                 width: 10,
+                  //               ),
+                  //               Flexible(
+                  //                   fit: FlexFit.tight,
+                  //                   child: Container(
+                  //                     padding: const EdgeInsets.only(top: 30, bottom: 10, right: 10, left: 10),
+                  //                     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(25)),
+                  //                     child: Column(
+                  //                       children: [
+                  //                         const Text(
+                  //                           "RENT",
+                  //                           style: TextStyle(color: donkeyBrown, fontSize: 16, fontWeight: FontWeight.w500),
+                  //                         ),
+                  //                         const Spacer(),
+                  //                         Column(
+                  //                           children: [
+                  //                             AnimatedCountUp(
+                  //                               duration: 1.5.seconds,
+                  //                               end: 2212,
+                  //                               style: GoogleFonts.manrope(
+                  //                                   color: donkeyBrown, fontWeight: FontWeight.w800, fontSize: 40),
+                  //                             ),
+                  //                             const Text(
+                  //                               "offers",
+                  //                               style: TextStyle(color: donkeyBrown),
+                  //                             ),
+                  //                           ],
+                  //                         ),
+                  //                         const Spacer(),
+                  //                       ],
+                  //                     ),
+                  //                   )),
+                  //             ],
+                  //           ).animate().scale(
+                  //             duration: 1.seconds,
+                  //           ),
+                  //         ),
+                  //       ) : const SizedBox.shrink(),
+                  //     ) ;
+                  //   },
+                  // ),
+                  // ValueListenableBuilder(
+                  //   valueListenable: opacity,
+                  //   builder: (BuildContext context, double value, Widget? child) {
+                  //     return AnimatedSwitcher(
+                  //       duration: const Duration(milliseconds: 1),
+                  //     //  opacity: 1 - value,
+                  //       child: value == 0 ? const SizedBox(
+                  //         height: 30,
+                  //       ) : const SizedBox.shrink(),
+                  //     ) ;
+                  //   },
+                  // )
                 ],
               ),
             ),
             SliverToBoxAdapter(
-              child: Offstage(
-                offstage: _isVisible,
-                child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 8),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.white),
-                    child: const Column(
-                      children: [
-                        RealEstateItem(
-                          isSplit: false,
-                          borderRadius: 20,
+              child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 8),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: Colors.white),
+                  child: const Column(
+                    children: [
+                      RealEstateItem(
+                        isSplit: false,
+                        borderRadius: 20,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 400,
+                        child: Row(
+                          children: [
+                            Flexible(
+                                child: RealEstateItem(
+                              height: 400,
+                            )),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Flexible(
+                                child: Column(
+                              children: [
+                                RealEstateItem(
+                                  height: 195,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                RealEstateItem(
+                                  height: 195,
+                                )
+                              ],
+                            ))
+                          ],
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          height: 400,
-                          child: Row(
-                            children: [
-                              Flexible(
-                                  child: RealEstateItem(
-                                height: 400,
-                              )),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Flexible(
-                                  child: Column(
-                                children: [
-                                  RealEstateItem(
-                                    height: 195,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  RealEstateItem(
-                                    height: 195,
-                                  )
-                                ],
-                              ))
-                            ],
-                          ),
-                        )
-                      ],
-                    )),
+                      )
+                    ],
+                  )).animate(delay: 1.seconds).slideY(
+                duration: 1000.milliseconds,
+                begin: 1.5,
+                end: 0,
+                curve: Curves.easeInOut,
               ),
             )
           ],
@@ -262,7 +384,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    scrollController.dispose();
+    _animationController.dispose();
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
     super.dispose();
   }
 }

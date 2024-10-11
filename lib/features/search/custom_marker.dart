@@ -44,8 +44,7 @@ class _CustomMarkerState extends State<CustomMarker> with SingleTickerProviderSt
         return Transform.scale(
           scale: _animation.value,
           alignment: Alignment.bottomLeft,
-          child: AnimatedContainer(
-            width:  widget.isExpanded ? 35 : 70,
+          child: Container(
             padding: const EdgeInsets.all(5),
             alignment: Alignment.center,
             decoration: const BoxDecoration(
@@ -57,7 +56,6 @@ class _CustomMarkerState extends State<CustomMarker> with SingleTickerProviderSt
                 bottomLeft: Radius.circular(0),
               ),
             ),
-            duration: 0.8.seconds,
             child: !widget.isExpanded ? const Icon(
               Icons.business,
               color: Colors.white,

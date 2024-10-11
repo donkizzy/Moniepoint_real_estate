@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:moniepoint_real_estate/features/bottom_nav/custom_bottom_nav.dart';
 import 'package:moniepoint_real_estate/features/home/home.dart';
 import 'package:moniepoint_real_estate/features/search/search.dart';
@@ -40,6 +41,11 @@ class _BottomNavState extends State<BottomNav> {
               "assets/heart.svg",
               "assets/user.svg"
             ],
+          ).animate(delay: 2.seconds).slideY(
+            duration: 1000.milliseconds,
+            begin: 1.5,
+            end: 0,
+            curve: Curves.easeInOut,
           ),
           body: screens[value],
         );

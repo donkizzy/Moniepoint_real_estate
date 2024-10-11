@@ -163,14 +163,27 @@ class _SearchPageState extends State<SearchPage> {
           ValueListenableBuilder(
             valueListenable: isExpanded,
             builder: (BuildContext context, bool value, Widget? child) {
-              return MarkerLayer(
-                markers:  List<Marker>.from(locations.map(
+              return AnimatedSwitcher(
+                duration: 500.ms,
+                child: !value ? MarkerLayer(
+                  markers:  List<Marker>.from(locations.map(
+                          (e) => Marker(
+                            height: 35,
+                        width:  35 ,
+                        point: LatLng(e.lat, e.long),
+                        child:  CustomMarker(isExpanded: value,),
+                      ),
+                    ),
+                  ),
+                ) :  MarkerLayer(
+                  markers:  List<Marker>.from(locations.map(
                         (e) => Marker(
-                          height: 35,
-                      width: !value? 35 : 70,
+                      height: 35,
+                      width:  70 ,
                       point: LatLng(e.lat, e.long),
                       child:  CustomMarker(isExpanded: value,),
                     ),
+                  ),
                   ),
                 ),
               ) ;
