@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moniepoint_real_estate/features/home/widget/animated_count_up.dart';
@@ -15,39 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
-  final ScrollController _scrollController = ScrollController();
- late  AnimationController _animationController;
-  late Animation<Offset> _offsetAnimation;
-  ValueNotifier<double> opacity = ValueNotifier(0);
-
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: 1.seconds,
-    );
-    _offsetAnimation = Tween<Offset>(
-      begin: Offset.zero,
-      end: const Offset(1, 0), // Adjust the end offset for desired slide distance
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOutQuad,
-    ));
-    _scrollController.addListener(_scrollListener);
-  }
-
-  _scrollListener() {
-      if (_scrollController.position.userScrollDirection == ScrollDirection.reverse) {
-        opacity.value = 1 ;
-        _animationController.forward(); // Slide in the bottom widget
-      } else {
-        opacity.value = 0 ;
-        _animationController.reverse(); // Slide out the bottom widget
-      }
-
-  }
 
 
   @override
@@ -65,7 +31,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           ],
         )),
         child: CustomScrollView(
-          controller: _scrollController,
           physics: const ClampingScrollPhysics(),
           slivers: [
             SliverAppBar(
@@ -222,108 +187,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
-                  // ValueListenableBuilder(
-                  //   valueListenable: opacity,
-                  //   builder: (BuildContext context, double value, Widget? child) {
-                  //     return AnimatedSwitcher(
-                  //       duration: const Duration(milliseconds: 1),
-                  //     //  opacity: 1 - value,
-                  //       child: value == 0 ? SizedBox(
-                  //         height: height(context) > 760 ? 200 : 150,
-                  //         child: Padding(
-                  //           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  //           child: Row(
-                  //             children: [
-                  //               Flexible(
-                  //                   fit: FlexFit.tight,
-                  //                   child: Container(
-                  //                     padding: const EdgeInsets.only(top: 30, bottom: 10, right: 10, left: 10),
-                  //                     decoration: const BoxDecoration(
-                  //                       shape: BoxShape.circle,
-                  //                       color: sunOrange,
-                  //                     ),
-                  //                     child: Column(
-                  //                       children: [
-                  //                         const Text(
-                  //                           "BUY",
-                  //                           style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
-                  //                         ),
-                  //                         const Spacer(),
-                  //                         Column(
-                  //                           children: [
-                  //                             AnimatedCountUp(
-                  //                               duration: 1.5.seconds,
-                  //                               end: 1024,
-                  //                               style: GoogleFonts.manrope(
-                  //                                   color: Colors.white, fontWeight: FontWeight.w800, fontSize: 40),
-                  //                             ),
-                  //                             const Text(
-                  //                               "offers",
-                  //                               style: TextStyle(color: Colors.white),
-                  //                             ),
-                  //                           ],
-                  //                         ),
-                  //                         const Spacer(),
-                  //                       ],
-                  //                     ),
-                  //                   )),
-                  //               const SizedBox(
-                  //                 width: 10,
-                  //               ),
-                  //               Flexible(
-                  //                   fit: FlexFit.tight,
-                  //                   child: Container(
-                  //                     padding: const EdgeInsets.only(top: 30, bottom: 10, right: 10, left: 10),
-                  //                     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(25)),
-                  //                     child: Column(
-                  //                       children: [
-                  //                         const Text(
-                  //                           "RENT",
-                  //                           style: TextStyle(color: donkeyBrown, fontSize: 16, fontWeight: FontWeight.w500),
-                  //                         ),
-                  //                         const Spacer(),
-                  //                         Column(
-                  //                           children: [
-                  //                             AnimatedCountUp(
-                  //                               duration: 1.5.seconds,
-                  //                               end: 2212,
-                  //                               style: GoogleFonts.manrope(
-                  //                                   color: donkeyBrown, fontWeight: FontWeight.w800, fontSize: 40),
-                  //                             ),
-                  //                             const Text(
-                  //                               "offers",
-                  //                               style: TextStyle(color: donkeyBrown),
-                  //                             ),
-                  //                           ],
-                  //                         ),
-                  //                         const Spacer(),
-                  //                       ],
-                  //                     ),
-                  //                   )),
-                  //             ],
-                  //           ).animate().scale(
-                  //             duration: 1.seconds,
-                  //           ),
-                  //         ),
-                  //       ) : const SizedBox.shrink(),
-                  //     ) ;
-                  //   },
-                  // ),
-                  // ValueListenableBuilder(
-                  //   valueListenable: opacity,
-                  //   builder: (BuildContext context, double value, Widget? child) {
-                  //     return AnimatedSwitcher(
-                  //       duration: const Duration(milliseconds: 1),
-                  //     //  opacity: 1 - value,
-                  //       child: value == 0 ? const SizedBox(
-                  //         height: 30,
-                  //       ) : const SizedBox.shrink(),
-                  //     ) ;
-                  //   },
-                  // )
+
                 ],
               ),
             ),
@@ -382,11 +249,4 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 
-  @override
-  void dispose() {
-    _animationController.dispose();
-    _scrollController.removeListener(_scrollListener);
-    _scrollController.dispose();
-    super.dispose();
-  }
 }
