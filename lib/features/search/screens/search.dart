@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -47,43 +46,43 @@ class _SearchPageState extends State<SearchPage> {
             userAgentPackageName: 'com.example.real_estate',
             retinaMode: true,
           ),
-          ValueListenableBuilder(
-            valueListenable: isExpanded,
-            builder: (BuildContext context, bool value, Widget? child) {
-              return AnimatedSwitcher(
-                duration: 500.ms,
-                child: value
-                    ? MarkerLayer(
-                        markers: List<Marker>.from(
-                          locations.map(
-                            (e) => Marker(
-                              height: 35,
-                              width: 35,
-                              point: LatLng(e.lat, e.long),
-                              child: CustomMarker(
-                                isExpanded: value,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    : MarkerLayer(
-                        markers: List<Marker>.from(
-                          locations.map(
-                            (e) => Marker(
-                              height: 35,
-                              width: 70,
-                              point: LatLng(e.lat, e.long),
-                              child: CustomMarker(
-                                isExpanded: value,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-              );
-            },
-          ),
+      ValueListenableBuilder(
+        valueListenable: isExpanded,
+        builder: (BuildContext context, bool value, Widget? child) {
+          return AnimatedSwitcher(
+            duration: 500.ms,
+            child: value
+                ? MarkerLayer(
+              key: const ValueKey('expanded'), // Add key here
+              markers: List<Marker>.from(
+                locations.map(
+                      (e)=> Marker(
+                    key: ValueKey(e.lat), // Add key here (assuming 'id' is unique)
+                    height: 35,
+                    width: 35,
+                    point: LatLng(e.lat, e.long),
+                    child: CustomMarker(isExpanded: value),
+                  ),
+                ),
+              ),
+            )
+                : MarkerLayer(
+              key: const ValueKey('collapsed'), // Add key here
+              markers: List<Marker>.from(
+                locations.map(
+                      (e) => Marker(
+                    key: ValueKey(e.lat), // Add key here
+                    height: 35,
+                    width: 70,
+                    point: LatLng(e.lat, e.long),
+                    child: CustomMarker(isExpanded: value),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
           Column(
             children: [
               const SizedBox(
