@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:moniepoint_real_estate/features/bottom_nav/custom_bottom_nav.dart';
-import 'package:moniepoint_real_estate/features/home/home.dart';
-import 'package:moniepoint_real_estate/features/search/search.dart';
+import 'package:moniepoint_real_estate/features/bottom_nav/widget/custom_bottom_nav.dart';
+import 'package:moniepoint_real_estate/features/home/screens/home.dart';
+import 'package:moniepoint_real_estate/features/search/screens/search.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});

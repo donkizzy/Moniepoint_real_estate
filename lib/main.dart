@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:moniepoint_real_estate/app_colors.dart';
-import 'package:moniepoint_real_estate/features/bottom_nav/bottom_nav.dart';
+import 'package:moniepoint_real_estate/core/app_colors.dart';
+import 'package:moniepoint_real_estate/features/bottom_nav/screens/bottom_nav.dart';
 
 void main() {
   runApp(const MyApp());

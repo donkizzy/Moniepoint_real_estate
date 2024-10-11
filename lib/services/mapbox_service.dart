@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:latlong2/latlong.dart';
-import 'package:moniepoint_real_estate/location.dart';
+import 'package:moniepoint_real_estate/models/location.dart';
 
 class MapBoxService {
   Location current = Location(

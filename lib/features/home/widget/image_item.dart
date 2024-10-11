@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:moniepoint_real_estate/app_colors.dart';
-import 'package:moniepoint_real_estate/utils.dart';
+import 'package:moniepoint_real_estate/core/app_colors.dart';
+import 'package:moniepoint_real_estate/core/utils.dart';
 
 class RealEstateItem extends StatelessWidget {
   final double height;

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:moniepoint_real_estate/app_colors.dart';
+import 'package:moniepoint_real_estate/core/app_colors.dart';
 
 class GlassButton extends StatelessWidget {
   final double? height;

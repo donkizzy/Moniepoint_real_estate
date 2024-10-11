@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:moniepoint_real_estate/animated_count_up.dart';
-import 'package:moniepoint_real_estate/app_colors.dart';
-import 'package:moniepoint_real_estate/features/home/image_item.dart';
-import 'package:moniepoint_real_estate/utils.dart';
+import 'package:moniepoint_real_estate/features/home/widget/animated_count_up.dart';
+import 'package:moniepoint_real_estate/core/app_colors.dart';
+import 'package:moniepoint_real_estate/features/home/widget/image_item.dart';
+import 'package:moniepoint_real_estate/core/utils.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

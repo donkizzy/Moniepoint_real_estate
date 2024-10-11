@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:moniepoint_real_estate/app_colors.dart';
-import 'package:moniepoint_real_estate/features/search/custom_marker.dart';
-import 'package:moniepoint_real_estate/features/search/glass_button.dart';
-import 'package:moniepoint_real_estate/location.dart';
+import 'package:moniepoint_real_estate/core/app_colors.dart';
+import 'package:moniepoint_real_estate/features/search/widget/custom_marker.dart';
+import 'package:moniepoint_real_estate/features/search/widget/glass_button.dart';
+import 'package:moniepoint_real_estate/models/location.dart';
 import 'package:moniepoint_real_estate/services/mapbox_service.dart';
 
 class SearchPage extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:moniepoint_real_estate/app_colors.dart';
+import 'package:moniepoint_real_estate/core/app_colors.dart';
 
 typedef ItemBuilder = Widget Function(
     BuildContext context, int index, String items);
