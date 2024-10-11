@@ -56,7 +56,7 @@ class _CustomMarkerState extends State<CustomMarker> with SingleTickerProviderSt
                 bottomLeft: Radius.circular(0),
               ),
             ),
-            child: !widget.isExpanded ? const Icon(
+            child: widget.isExpanded ? const Icon(
               Icons.business,
               color: Colors.white,
               size: 20,

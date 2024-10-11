@@ -74,10 +74,11 @@ ItemBuilder _defaultItemBuilder({
               ? sunOrange
               : tuataraBlack,
           ),
-      child: InkWell(
+      child: GestureDetector(
         onTap: () {
           onTap!(index);
         },
+        behavior: HitTestBehavior.opaque,
         child: Container(
           padding:  EdgeInsets.all(isSelected ?  15: 10),
           child: Center(
